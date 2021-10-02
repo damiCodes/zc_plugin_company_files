@@ -5,32 +5,9 @@ import {Link} from "react-router-dom";
 import axios from 'axios'
 import ZippedIcon from '../svg/zippedIcon';
 import classes from '../RecentlyViewed.module.css'
+import { format } from "timeago.js";
 
 function RecentlyViewedZip() {
-    const [images, setImages] = useState([])
-    
-    useEffect(() => {
-        axios.get('https://companyfiles.zuri.chat/api/v1/files/recentlyViewedCompressed')
-        .then(res => {
-            console.log('res', res.data)
-            setImages(res.data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }, [])
-    const goBack = () => {
-        const currentState = history.state;
-        history.pushState(currentState, '', '/companyfiles');
-    }
-
-    const backBtn = (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 12H4" stroke="#333333" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M10 18L4 12L10 6" stroke="#333333" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    )
-
     return (
         <div className={classes.recentlyViewed}>
             <div className={classes.header}>
@@ -63,7 +40,7 @@ function RecentlyViewedZip() {
                                     {image.fileName}
                                 </div>
                                 <div className={classes.timeStamp}>
-                                    {image.lastAccessed}
+                                    {format(image.lastAccessed)}
                                 </div>
                             </div>
                         </div>
